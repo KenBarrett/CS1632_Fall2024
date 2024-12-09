@@ -6,6 +6,7 @@ import com.pholser.junit.quickcheck.runner.JUnitQuickcheck;
 import org.junit.runner.RunWith;
 
 import static org.junit.Assert.*;
+import static org.junit.Assume.assumeThat;
 import static org.hamcrest.Matchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -23,6 +24,13 @@ public class QuickCheckTest {
 	 */
 	
 	// TODO: Write @Property testSquare using invariants of your own.
+	@Property
+	public void testSquare(@InRange(minInt = -10, maxInt = 10) int d) {
+		int ret = IntegerOps.square(d);
+		// TODO: Fill in
+		assertTrue("is positive or zero", ret >=0);
+		assertTrue("greater than or equal to", ret >= d);
+	}
 	
 	/**
 	 * <pre>
@@ -36,6 +44,18 @@ public class QuickCheckTest {
 	 */
 	
 	// TODO: Write @Property testAddInRange using invariants of your own.
+	@Property
+	public void testAddInRange(@InRange(minInt = -10, maxInt = 10) int x, @InRange(minInt = -10, maxInt = 10) int y) {
+		double ret = IntegerOps.add(x, y);
+		// TODO: Fill in
+		if(x > 0 && y > 0){
+			assertTrue("is positive", ret > 0);
+		}
+		if(x < 0 && y < 0){
+			assertTrue("is negative", ret < 0);
+		}
+		assertTrue("in range", ret >= -20 && ret <= 20);
+	}
 
 	/**
 	 * <pre>
@@ -50,4 +70,12 @@ public class QuickCheckTest {
 	
 	// TODO: Write @Property testAddGreaterThan and see if you can find additional invariants with the addition x > -y precondition.
 	// Use the assumeThat API to enforce the x > -y precondition.
+	@Property
+	public void testAddGreaterThan(@InRange(minInt = -10, maxInt = 10) int x, @InRange(minInt = -10, maxInt = 10) int y) {
+		assumeThat("Precondition x > -y is not met", x, greaterThan(-y));
+		int ret = IntegerOps.add(x, y);
+		// TODO: Fill in
+		assertTrue("is positive", ret > 0);
+		assertTrue("in range", ret >= -20 && ret <= 20);
+	}
 }

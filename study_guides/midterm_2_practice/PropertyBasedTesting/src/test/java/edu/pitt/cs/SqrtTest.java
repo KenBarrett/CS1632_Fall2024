@@ -25,5 +25,6 @@ public class SqrtTest {
 	public void testSqrt(@InRange(minDouble = 0, maxDouble = 25) double d) {
 		double ret = Math.sqrt(d);
 		// TODO: Fill in
+		assertTrue("is positive or zero", ret >=0);
 	}
 }
